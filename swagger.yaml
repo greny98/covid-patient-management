@@ -1,0 +1,319 @@
+swagger: '2.0'
+info:
+  description: 'Covid patient management'
+  version: '1.0.0'
+  title: 'Swagger covid patient management'
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: 'apiteam@swagger.io'
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'localhost:3000'
+basePath: '/v2'
+
+tags:
+  - name: doctors
+  - name: patients
+  - name: notification
+
+paths:
+  # =========================================[Doctor]=======================================================
+  # TODO: Login, Logout
+  # TODO: Cập nhật thông tin cá nhân
+  /doctors/login:
+    post:
+      tags:
+        - doctors
+      summary: 'Login'
+      parameters:
+        - name: 'body'
+          in: body
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: 'Logged in successfully'
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+        400:
+          description: 'Failed'
+          schema:
+            type: object
+            properties:
+              error:
+                type: number
+              reason:
+                type: string
+  /doctors/logout:
+    post:
+      summary: 'Logout'
+      tags:
+        - doctors
+      parameters:
+        - in: body
+          name: 'body'
+          schema:
+            type: object
+            properties:
+              doctorId:
+                type: integer
+      responses:
+        200:
+          description: 'Logged out'
+
+  # =========================================[Patient]=======================================================
+  # Get (Dựa tên tài khoản đăng nhập)
+  # TODO: Liệt kê theo ngày cụ thể
+  # TODO: Tìm kiếm theo tên bệnh nhân
+  # TODO: Lấy thông tin một bệnh nhân cụ thể
+  # Post
+  # TODO: Tạo hồ sơ bệnh nhân
+  # TODO: Upload ảnh x-ray
+  # Update
+  # TODO: Cập nhật thông tin bệnh nhân
+  /patients:
+    get:
+      summary: 'Liệt kê theo ngày cụ thể'
+      tags:
+        - patients
+      parameters:
+        - in: query
+          name: date
+          type: string
+          format: 'date-time'
+      responses:
+        200:
+          description: 'Danh sách bệnh nhân'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                fullname:
+                  type: string
+                status:
+                  type: string
+    post:
+      summary: 'Tạo hồ sơ bệnh nhân'
+      tags:
+        - patients
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              fullname:
+                type: string
+              phone:
+                type: string
+              note:
+                type: string
+      responses:
+        200:
+          description: 'Khởi tạo thành công'
+          schema:
+            $ref: '#/definitions/patient'
+    put:
+      summary: 'Cập nhật thông tin'
+      tags:
+        - patients
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/patient'
+      responses:
+        200:
+          description: 'Thành công'
+          schema:
+            $ref: '#/definitions/patient'
+
+  /patients/:id:
+    get:
+      summary: 'Lấy thông tin chi tiết của bệnh nhân qua id'
+      tags:
+        - patients
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        200:
+          description: 'Thông tin bệnh nhân, kết quả ảnh xquang đã upload và kết quả chuẩn đoán'
+          schema:
+            type: object
+            properties:
+              patient:
+                type: object
+                $ref: '#/definitions/patient'
+              xrayInputs:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/definitions/xray_input'
+
+  /patients/search/:name:
+    get:
+      summary: 'Tìm kiếm theo tên bệnh nhân'
+      tags:
+        - patients
+      parameters:
+        - in: path
+          name: name
+          type: string
+          required: true
+      responses:
+        200:
+          description: 'Danh sách bệnh nhân'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                fullname:
+                  type: string
+                status:
+                  type: string
+
+  /patients/:id/upload:
+    post:
+      summary: 'Upload ảnh xquang'
+      tags:
+        - patients
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              patientId:
+                type: integer
+              image:
+                type: string
+      responses:
+        200:
+          description: 'Thông tin ảnh được upload'
+          schema:
+            $ref: '#/definitions/xray_input'
+
+  /patents/:id/remove:
+    post:
+      summary: 'Xóa ảnh xquang'
+      tags:
+        - patients
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/xray_input'
+      responses:
+        200:
+          description: 'Thành công'
+  # =========================================[XRayInput]=======================================================
+  # TODO: Xóa ảnh
+
+  # =========================================[Notification]=======================================================
+  # TODO: Liệt kê noti
+  # TODO: Lấy số lượng noti chưa xem
+  # TODO: update trạng thái
+  /notification:
+    get:
+      summary: 'Liệt kê thông báo theo thời gian gần nhất'
+      tags:
+        - notification
+      parameters:
+        - in: query
+          name: page
+          type: integer
+      responses:
+        200:
+          description: 'Danh sách thông báo'
+          schema:
+            type: array
+            items:
+              type: object
+              $ref: '#/definitions/notification'
+    put:
+      summary: 'Cập nhật trạng thái'
+      tags:
+        - notification
+      parameters:
+        - in: query
+          name: id
+          required: true
+          type: integer
+      responses:
+        200:
+          description: 'Thành công'
+
+  /notification/unseen:
+    get:
+      summary: 'Lấy số lượng thông báo chưa xem'
+      tags:
+        - notification
+      responses:
+        200:
+          description: 'Số lương'
+          schema:
+            type: object
+            properties:
+              count:
+                type: number
+
+definitions:
+  patient:
+    type: object
+    properties:
+      id:
+        type: integer
+      fullname:
+        type: string
+      phone:
+        type: string
+  xray_input:
+    type: object
+    properties:
+      id:
+        type: integer
+      patientId:
+        type: integer
+      xrayOutput:
+        type: object
+        properties:
+          filepath:
+            type: string
+      filepath:
+        type: string
+      status:
+        type: string
+      note:
+        type: string
+  notification:
+    type: object
+    properties:
+      id:
+        type: integer
+      doctorId:
+        type: integer
+      content:
+        type: string
+      status:
+        type: string
+schemes:
+  - https
+  - http
