@@ -1,19 +1,18 @@
-process.env["NODE_CONFIG_DIR"] = __dirname + "/configs";
+process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
-import compression from "compression";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import config from "config";
-import express from "express";
-import helmet from "helmet";
-import hpp from "hpp";
-import morgan from "morgan";
-import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
-import DB from "@databases";
-import { Routes } from "@interfaces/routes.interface";
-import errorMiddleware from "@middlewares/error.middleware";
-import { logger, stream } from "@utils/logger";
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import config from 'config';
+import express from 'express';
+import helmet from 'helmet';
+import hpp from 'hpp';
+import morgan from 'morgan';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import { Routes } from '@interfaces/routes.interface';
+import errorMiddleware from '@middlewares/error.middleware';
+import { logger, stream } from '@utils/logger';
 
 class App {
   public app: express.Application;
@@ -23,7 +22,7 @@ class App {
   constructor(routes: Routes[]) {
     this.app = express();
     this.port = process.env.PORT || 3000;
-    this.env = process.env.NODE_ENV || "development";
+    this.env = process.env.NODE_ENV || 'development';
 
     this.connectToDatabase();
     this.initializeMiddlewares();
@@ -50,8 +49,8 @@ class App {
   }
 
   private initializeMiddlewares() {
-    this.app.use(morgan(config.get("log.format"), { stream }));
-    this.app.use(cors({ origin: config.get("cors.origin"), credentials: config.get("cors.credentials") }));
+    this.app.use(morgan(config.get('log.format'), { stream }));
+    this.app.use(cors({ origin: config.get('cors.origin'), credentials: config.get('cors.credentials') }));
     this.app.use(hpp());
     this.app.use(helmet());
     this.app.use(compression());
@@ -62,7 +61,7 @@ class App {
 
   private initializeRoutes(routes: Routes[]) {
     routes.forEach(route => {
-      this.app.use("/", route.router);
+      this.app.use('/', route.router);
     });
   }
 
@@ -70,16 +69,16 @@ class App {
     const options = {
       swaggerDefinition: {
         info: {
-          title: "REST API",
-          version: "1.0.0",
-          description: "Example docs"
-        }
+          title: 'REST API',
+          version: '1.0.0',
+          description: 'Example docs',
+        },
       },
-      apis: ["swagger.yaml"]
+      apis: ['swagger.yaml'],
     };
 
     const specs = swaggerJSDoc(options);
-    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
   private initializeErrorHandling() {

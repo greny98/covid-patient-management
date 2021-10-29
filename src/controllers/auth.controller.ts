@@ -1,42 +1,42 @@
-import { NextFunction, Request, Response } from "express";
-import { CreateUserDto } from "@dtos/users.dto";
-import { User } from "@interfaces/users.interface";
-import { RequestWithUser } from "@interfaces/auth.interface";
-import AuthService from "@services/auth.service";
+import { NextFunction, Request, Response, RequestHandler } from 'express';
+import { RequestWithDoctor } from '@interfaces/auth.interface';
+import AuthService from '@services/auth.service';
+import { CreateDoctorDto } from '@/dtos/doctor.dto';
+import { IDoctor } from '@/interfaces/doctor.interface';
 
 class AuthController {
   public authService = new AuthService();
 
-  public signUp = async (req: Request, res: Response, next: NextFunction) => {
+  public signUp: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const signUpUserData: User = await this.authService.signup(userData);
+      const doctorData: CreateDoctorDto = req.body;
+      const signUpDoctorData: IDoctor = await this.authService.signup(doctorData);
 
-      res.status(201).json({ data: signUpUserData, message: "signup" });
+      res.status(201).json({ data: signUpDoctorData, message: 'signup' });
     } catch (error) {
       next(error);
     }
   };
 
-  public logIn = async (req: Request, res: Response, next: NextFunction) => {
+  public logIn: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const { cookie, findUser } = await this.authService.login(userData);
+      const doctorData: CreateDoctorDto = req.body;
+      const { cookie, findDoctor } = await this.authService.login(doctorData);
 
-      res.setHeader("Set-Cookie", [cookie]);
-      res.status(200).json({ data: findUser, message: "login" });
+      res.setHeader('Set-Cookie', [cookie]);
+      res.status(200).json({ data: findDoctor, message: 'login' });
     } catch (error) {
       next(error);
     }
   };
 
-  public logOut = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+  public logOut: RequestHandler = async (req: RequestWithDoctor, res: Response, next: NextFunction) => {
     try {
-      const userData: User = req.user;
-      const logOutUserData: User = await this.authService.logout(userData);
+      const doctorData: IDoctor = req.doctor;
+      const logOutdoctorData: IDoctor = await this.authService.logout(doctorData);
 
-      res.setHeader("Set-Cookie", ["Authorization=; Max-age=0"]);
-      res.status(200).json({ data: logOutUserData, message: "logout" });
+      res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
+      res.status(200).json({ data: logOutdoctorData, message: 'logout' });
     } catch (error) {
       next(error);
     }

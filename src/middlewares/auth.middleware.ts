@@ -1,31 +1,31 @@
-import { NextFunction, Response } from "express";
-import config from "config";
-import jwt from "jsonwebtoken";
-import DB from "@databases";
-import { HttpException } from "@exceptions/HttpException";
-import { DataStoredInToken, RequestWithUser } from "@interfaces/auth.interface";
+import { NextFunction, Response } from 'express';
+import config from 'config';
+import jwt from 'jsonwebtoken';
+import DB from '@databases';
+import { HttpException } from '@exceptions/HttpException';
+import { DataStoredInToken, RequestWithDoctor } from '@interfaces/auth.interface';
 
-const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+const authMiddleware = async (req: RequestWithDoctor, res: Response, next: NextFunction) => {
   try {
-    const Authorization = req.cookies["Authorization"] || req.header("Authorization").split("Bearer ")[1] || null;
+    const Authorization = req.cookies['Authorization'] || req.header('Authorization').split('Bearer ')[1] || null;
 
     if (Authorization) {
-      const secretKey: string = config.get("secretKey");
+      const secretKey: string = config.get('secretKey');
       const verificationResponse = jwt.verify(Authorization, secretKey) as DataStoredInToken;
-      const userId = verificationResponse.id;
-      const findUser = await DB.Users.findByPk(userId);
+      const doctorId = verificationResponse.id;
+      const findDoctor = await DB.Doctors.findByPk(doctorId);
 
-      if (findUser) {
-        req.user = findUser;
+      if (findDoctor) {
+        req.doctor = findDoctor;
         next();
       } else {
-        next(new HttpException(401, "Wrong authentication token"));
+        next(new HttpException(401, 'Wrong authentication token'));
       }
     } else {
-      next(new HttpException(404, "Authentication token missing"));
+      next(new HttpException(404, 'Authentication token missing'));
     }
   } catch (error) {
-    next(new HttpException(401, "Wrong authentication token"));
+    next(new HttpException(401, 'Wrong authentication token'));
   }
 };
 
