@@ -1,3 +1,5 @@
+import DB from "@databases";
+
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
 import compression from 'compression';
@@ -45,7 +47,7 @@ class App {
   }
 
   private connectToDatabase() {
-    // DB.sequelize.sync({ force: false });
+    DB.sequelize.sync({ force: false });
   }
 
   private initializeMiddlewares() {
