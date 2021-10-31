@@ -5,7 +5,7 @@ import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
 import { isEmpty } from '@utils/util';
-import { CreateDoctorDto } from '@/dtos/doctor.dto';
+import { CreateDoctorDto, LoginDoctorDto } from '@/dtos/doctor.dto';
 import { IDoctor } from '@/interfaces/doctor.interface';
 
 class AuthService {
@@ -23,7 +23,7 @@ class AuthService {
     return createUserData;
   }
 
-  public async login(doctorData: CreateDoctorDto): Promise<{ cookie: string; findDoctor: IDoctor }> {
+  public async login(doctorData: LoginDoctorDto): Promise<{ cookie: string; findDoctor: IDoctor }> {
     if (isEmpty(doctorData)) throw new HttpException(400, "You're not doctorData");
 
     const findDoctor: IDoctor = await this.doctors.findOne({ where: { username: doctorData.username } });

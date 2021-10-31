@@ -13,6 +13,14 @@ export class CreateDoctorDto {
   @IsPhoneNumber()
   public phone: string;
 
-  @IsPhoneNumber()
+  @IsString()
   public position: string;
+}
+
+export class LoginDoctorDto {
+  @IsString()
+  public username: string;
+
+  @IsString()
+  public password: string;
 }

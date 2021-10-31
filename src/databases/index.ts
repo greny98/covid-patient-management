@@ -38,14 +38,14 @@ sequelize.authenticate();
 
 const DB = {
   Users: UserModel(sequelize),
-  // Patients: PatientModel(sequelize),
-  // Doctors: DoctorModel(sequelize),
-  // Cares: CareModel(sequelize),
-  // Notifications: NotificationModel(sequelize),
-  // Devices: DeviceModel(sequelize),
-  // XrayDiagnosis: XrayDiagnosisModel(sequelize),
-  // XrayInput: XrayInputModel(sequelize),
-  // XrayOutput: XrayOutputModel(sequelize),
+  Patients: PatientModel(sequelize),
+  Doctors: DoctorModel(sequelize),
+  Cares: CareModel(sequelize),
+  Notifications: NotificationModel(sequelize),
+  Devices: DeviceModel(sequelize),
+  XrayDiagnosis: XrayDiagnosisModel(sequelize),
+  XrayInput: XrayInputModel(sequelize),
+  XrayOutput: XrayOutputModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };

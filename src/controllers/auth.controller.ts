@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, RequestHandler } from 'express';
 import { RequestWithDoctor } from '@interfaces/auth.interface';
 import AuthService from '@services/auth.service';
-import { CreateDoctorDto } from '@/dtos/doctor.dto';
+import { CreateDoctorDto, LoginDoctorDto } from '@/dtos/doctor.dto';
 import { IDoctor } from '@/interfaces/doctor.interface';
 
 class AuthController {
@@ -20,7 +20,7 @@ class AuthController {
 
   public logIn: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const doctorData: CreateDoctorDto = req.body;
+      const doctorData: LoginDoctorDto = req.body;
       const { cookie, findDoctor } = await this.authService.login(doctorData);
 
       res.setHeader('Set-Cookie', [cookie]);
