@@ -6,9 +6,21 @@ import AuthRoute from '@routes/auth.route';
 import IndexRoute from '@routes/index.route';
 import UsersRoute from '@routes/users.route';
 import DoctorRoute from './routes/doctor.route';
+import PatientRoute from './routes/patient.route';
+import CareRoute from './routes/care.route';
+import NotificationRoute from './routes/notification.route';
+
 import validateEnv from '@utils/validateEnv';
 validateEnv();
 
-const app = new App([new IndexRoute(), new UsersRoute(), new AuthRoute(), new DoctorRoute()]);
+const app = new App([
+  new IndexRoute(),
+  new UsersRoute(),
+  new AuthRoute(),
+  new DoctorRoute(),
+  new PatientRoute(),
+  new CareRoute(),
+  new NotificationRoute(),
+]);
 
 app.listen();

@@ -2,7 +2,7 @@ import { IPatient } from '@/interfaces/patient.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 
 export class PatientModel extends Model<IPatient> implements IPatient {
-  public name: string;
+  public fullname: string;
   public phone: string;
   public note: string;
 
@@ -18,7 +18,7 @@ export default function (sequelize: Sequelize): typeof PatientModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      name: {
+      fullname: {
         type: DataTypes.STRING,
         allowNull: false,
       },

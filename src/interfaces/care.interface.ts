@@ -4,3 +4,7 @@ export interface ICare {
   doctorId?: number;
   responsibility: string;
 }
+
+export interface IGetAllCares {
+  page?: number;
+}

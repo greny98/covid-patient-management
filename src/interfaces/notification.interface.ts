@@ -4,3 +4,7 @@ export interface INotification {
   content: string;
   status: string;
 }
+
+export interface IGetAllNoti {
+  page?: number;
+}
