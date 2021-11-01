@@ -9,6 +9,8 @@ import DoctorRoute from './routes/doctor.route';
 import PatientRoute from './routes/patient.route';
 import CareRoute from './routes/care.route';
 import NotificationRoute from './routes/notification.route';
+import DeviceRoute from './routes/device.route';
+import XrayDiagnosisRoute from './routes/xrayDiagnosis.route';
 
 import validateEnv from '@utils/validateEnv';
 validateEnv();
@@ -21,6 +23,8 @@ const app = new App([
   new PatientRoute(),
   new CareRoute(),
   new NotificationRoute(),
+  new DeviceRoute(),
+  new XrayDiagnosisRoute(),
 ]);
 
 app.listen();

@@ -3,3 +3,6 @@ export interface IXrayOutput {
   xrayInputId?: number;
   filepath: string;
 }
+export interface IGetAllXrayOutput {
+  page?: number;
+}

@@ -4,3 +4,7 @@ export interface IDevice {
   token: string;
   expiredAt: Date;
 }
+
+export interface IGetAllDevices {
+  page?: number;
+}

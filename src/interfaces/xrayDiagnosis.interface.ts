@@ -7,3 +7,7 @@ export interface IXrayDiagnosis {
   note: string;
   status: string;
 }
+
+export interface IGetAllXrayDiagnosis {
+  page?: number;
+}

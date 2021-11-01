@@ -4,7 +4,7 @@ import { PatientModel } from './patient.model';
 
 export class XrayInputModel extends Model<IXrayInput> implements IXrayInput {
   patientId: number;
-  xrayOutputId: number;
+  xrayOutputId?: number;
   filepath: string;
   note: string;
   status: string;

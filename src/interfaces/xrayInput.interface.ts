@@ -6,3 +6,7 @@ export interface IXrayInput {
   status: string;
   note: string;
 }
+
+export interface IGetAllXrayInput {
+  page?: number;
+}
