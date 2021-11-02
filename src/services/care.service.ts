@@ -5,6 +5,9 @@ import { ICare } from '@/interfaces/care.interface';
 import { CreateCareDto } from '@/dtos/care.dto';
 import { DoctorModel } from '@/models/doctor.model';
 import { PatientModel } from '@/models/patient.model';
+import moment from 'moment';
+import { Op } from 'sequelize';
+import { IPatient } from '@interfaces/patient.interface';
 
 class CareService {
   public cares = DB.Cares;
@@ -52,6 +55,24 @@ class CareService {
     return updateCare;
   }
   // TODO: Search by date, Delete
+  public async filterPatients(doctorId: number, date: Date): Promise<IPatient[]> {
+    const fromDate = moment(date).startOf('day').toDate();
+    const endDate = moment(date).endOf('day').toDate();
+    const cares = await this.cares.findAll({
+      where: {
+        createdAt: {
+          [Op.between]: [fromDate, endDate],
+        },
+        doctorId,
+      },
+      order: [['createdAt', 'desc']],
+      include: [
+        { model: DoctorModel, as: 'doctor' },
+        { model: PatientModel, as: 'patient' },
+      ],
+    });
+    return cares.map(c => c.patient);
+  }
 }
 
 export default CareService;

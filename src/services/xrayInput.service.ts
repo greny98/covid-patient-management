@@ -48,6 +48,9 @@ class XrayInputService {
     return updateXrayInput;
   }
   // TODO: Search by date, Delete
+  public async findByPatientId(patientId: number): Promise<IXrayInput[]> {
+    return await this.xrayInput.findAll({ where: { patientId }, raw: false });
+  }
 }
 
 export default XrayInputService;

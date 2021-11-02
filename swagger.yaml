@@ -18,6 +18,14 @@ tags:
   - name: notification
 
 paths:
+  # =========================================[Mockup]=======================================================
+  /mockup:
+    get:
+      summary: 'Sinh dữ liệu'
+      responses:
+        200:
+          description: 'Sinh thành công'
+
   # =========================================[Doctor]=======================================================
   # TODO: Login, Logout
   # TODO: Cập nhật thông tin cá nhân
@@ -25,7 +33,7 @@ paths:
     post:
       tags:
         - doctors
-      summary: 'Login'
+      summary: 'Login - DONE'
       parameters:
         - name: 'body'
           in: body
@@ -82,7 +90,7 @@ paths:
   # TODO: Cập nhật thông tin bệnh nhân
   /patients:
     get:
-      summary: 'Liệt kê theo ngày cụ thể'
+      summary: 'Liệt kê theo ngày cụ thể - DONE'
       tags:
         - patients
       parameters:
@@ -105,7 +113,7 @@ paths:
                 status:
                   type: string
     post:
-      summary: 'Tạo hồ sơ bệnh nhân'
+      summary: 'Tạo hồ sơ bệnh nhân - DONE'
       tags:
         - patients
       parameters:
@@ -126,7 +134,7 @@ paths:
           schema:
             $ref: '#/definitions/patient'
     put:
-      summary: 'Cập nhật thông tin'
+      summary: 'Cập nhật thông tin - DONE'
       tags:
         - patients
       parameters:
@@ -142,7 +150,7 @@ paths:
 
   /patients/:id:
     get:
-      summary: 'Lấy thông tin chi tiết của bệnh nhân qua id'
+      summary: 'Lấy thông tin chi tiết của bệnh nhân qua id - DONE'
       tags:
         - patients
       parameters:

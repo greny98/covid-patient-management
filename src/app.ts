@@ -1,7 +1,6 @@
-import DB from "@databases";
-
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
+import DB from '@databases';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';

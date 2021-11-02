@@ -2,11 +2,15 @@ import { ICare } from '@/interfaces/care.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { DoctorModel } from './doctor.model';
 import { PatientModel } from './patient.model';
+import { IDoctor } from '@interfaces/doctor.interface';
+import { IPatient } from '@interfaces/patient.interface';
 
 export class CareModel extends Model<ICare> implements ICare {
   responsibility: string;
   patientId: number;
   doctorId: number;
+  doctor?: IDoctor;
+  patient?: IPatient;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

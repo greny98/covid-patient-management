@@ -41,6 +41,9 @@ class XrayOutputService {
     return updateXrayOutput;
   }
   // TODO: Search by date, Delete
+  public async findByInput(xrayInputId: number): Promise<IXrayOutput> {
+    return this.xrayOutput.findOne({ where: { xrayInputId } });
+  }
 }
 
 export default XrayOutputService;

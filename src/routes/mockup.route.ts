@@ -1,20 +1,19 @@
 import { Router } from 'express';
-import IndexController from '@controllers/index.controller';
 import { Routes } from '@interfaces/routes.interface';
 import MockupController from '@controllers/mockup.controller';
 
-class IndexRoute implements Routes {
-  public path = '/';
+class MockupRoute implements Routes {
+  public path = '/mockup';
   public router = Router();
-  public indexController = new IndexController();
+  public mockupController = new MockupController();
 
   constructor() {
     this.initializeRoutes();
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.indexController.index);
+    this.router.get(`${this.path}`, this.mockupController.generateData);
   }
 }
 
-export default IndexRoute;
+export default MockupRoute;

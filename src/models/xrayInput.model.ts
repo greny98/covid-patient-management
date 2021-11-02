@@ -1,6 +1,7 @@
 import { IXrayInput } from '@/interfaces/xrayInput.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { PatientModel } from './patient.model';
+import { XrayOutputModel } from './xrayOutput.model';
 
 export class XrayInputModel extends Model<IXrayInput> implements IXrayInput {
   patientId: number;
@@ -29,6 +30,10 @@ export default function (sequelize: Sequelize): typeof XrayInputModel {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      xrayOutputId: {
+        type: DataTypes.INTEGER,
+        defaultValue: -1,
+      },
       status: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -40,6 +45,5 @@ export default function (sequelize: Sequelize): typeof XrayInputModel {
     },
   );
   XrayInputModel.belongsTo(PatientModel, { foreignKey: { name: 'patientId' }, as: 'patient' });
-
   return XrayInputModel;
 }

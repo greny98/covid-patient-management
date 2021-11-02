@@ -1,11 +1,11 @@
-import DB from '@databases';
-import { HttpException } from '@exceptions/HttpException';
-import { isEmpty } from '@utils/util';
-import { IPatient } from '@/interfaces/patient.interface';
-import { CreatePatientDto } from '@/dtos/patient.dto';
+import DB from "@databases";
+import { HttpException } from "@exceptions/HttpException";
+import { isEmpty } from "@utils/util";
+import { IPatient } from "@/interfaces/patient.interface";
+import { CreatePatientDto } from "@/dtos/patient.dto";
 
 class PatientService {
-  public patients = DB.Patients;
+  private patients = DB.Patients;
 
   public async findAllPatient(page: number): Promise<IPatient[]> {
     const limit = 10;
@@ -39,7 +39,10 @@ class PatientService {
     const updatePatient: IPatient = await this.patients.findByPk(patientId);
     return updatePatient;
   }
-  // TODO: Search by date, Delete
+  // TODO: Search By id
+  public async findById(patientId: number): Promise<IPatient> {
+    return await this.patients.findByPk(patientId);
+  }
 }
 
 export default PatientService;
