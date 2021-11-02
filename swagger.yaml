@@ -13,6 +13,7 @@ host: 'localhost:3000'
 basePath: '/v2'
 
 tags:
+  - name: mockup
   - name: doctors
   - name: patients
   - name: notification
@@ -21,6 +22,8 @@ paths:
   # =========================================[Mockup]=======================================================
   /mockup:
     get:
+      tags:
+        - mockup
       summary: 'Sinh dữ liệu'
       responses:
         200:
