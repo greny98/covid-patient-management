@@ -176,34 +176,9 @@ paths:
                   type: object
                   $ref: '#/definitions/xray_input'
 
-  /patients/search/:name:
-    get:
-      summary: 'Tìm kiếm theo tên bệnh nhân'
-      tags:
-        - patients
-      parameters:
-        - in: path
-          name: name
-          type: string
-          required: true
-      responses:
-        200:
-          description: 'Danh sách bệnh nhân'
-          schema:
-            type: array
-            items:
-              type: object
-              properties:
-                id:
-                  type: integer
-                fullname:
-                  type: string
-                status:
-                  type: string
-
-  /patients/:id/upload:
+  /uploads:
     post:
-      summary: 'Upload ảnh xquang'
+      summary: 'Upload ảnh xquang - DONE'
       tags:
         - patients
       parameters:
