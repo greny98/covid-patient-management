@@ -30,9 +30,6 @@ class DeviceService {
 
   public async createDevices(deviceData: CreateDeviceDto): Promise<IDevice> {
     if (isEmpty(deviceData)) throw new HttpException(400, "You're not deviceData");
-
-    // const findDevices: IDevice = await this.devices.findOne({ where: { token: deviceData.token } });
-    // if (findDevices) throw new HttpException(409, `You're token ${deviceData.token} already exists`);
     const tokenDeviceData = this.createTokenDevice(deviceData);
     const newDevice = await this.devices.create({
       doctorId: deviceData.doctorId,
