@@ -3,6 +3,7 @@ import { RequestWithDoctor } from '@interfaces/auth.interface';
 import AuthService from '@services/auth.service';
 import { CreateDoctorDto, LoginDoctorDto } from '@/dtos/doctor.dto';
 import { IDoctor } from '@/interfaces/doctor.interface';
+import moment from 'moment';
 
 class AuthController {
   public authService = new AuthService();
@@ -21,10 +22,11 @@ class AuthController {
   public logIn: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const doctorData: LoginDoctorDto = req.body;
-      const { cookie, findDoctor } = await this.authService.login(doctorData);
-
-      res.setHeader('Set-Cookie', [cookie]);
-      res.status(200).json({ data: findDoctor, message: 'login' });
+      const { tokenData, findDoctor } = await this.authService.login(doctorData);
+      // res.setHeader('Set-Cookie', [cookie]);
+      res
+        .status(200)
+        .json({ data: { findDoctor, token: tokenData.token, expiredAt: moment().add(tokenData.expiresIn, 'minutes').toDate() }, message: 'login' });
     } catch (error) {
       next(error);
     }

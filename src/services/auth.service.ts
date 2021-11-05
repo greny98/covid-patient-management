@@ -23,7 +23,7 @@ class AuthService {
     return createUserData;
   }
 
-  public async login(doctorData: LoginDoctorDto): Promise<{ cookie: string; findDoctor: IDoctor }> {
+  public async login(doctorData: LoginDoctorDto): Promise<{ tokenData: TokenData; findDoctor: IDoctor }> {
     if (isEmpty(doctorData)) throw new HttpException(400, "You're not doctorData");
 
     const findDoctor: IDoctor = await this.doctors.findOne({ where: { username: doctorData.username } });
@@ -33,9 +33,9 @@ class AuthService {
     if (!isPasswordMatching) throw new HttpException(409, "You're password not matching");
 
     const tokenData = this.createToken(findDoctor);
-    const cookie = this.createCookie(tokenData);
+    // const cookie = this.createCookie(tokenData);
 
-    return { cookie, findDoctor };
+    return { tokenData, findDoctor };
   }
 
   public async logout(doctorData: IDoctor): Promise<IDoctor> {
