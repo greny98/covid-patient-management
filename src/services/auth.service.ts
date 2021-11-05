@@ -1,9 +1,8 @@
-import bcrypt from 'bcrypt';
 import config from 'config';
 import jwt from 'jsonwebtoken';
 import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
-import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
+import { TokenData } from '@interfaces/auth.interface';
 import { isEmpty } from '@utils/util';
 import { CreateDoctorDto, LoginDoctorDto } from '@/dtos/doctor.dto';
 import { IDoctor } from '@/interfaces/doctor.interface';
@@ -17,8 +16,7 @@ class AuthService {
     if (findDoctor) {
       throw new HttpException(409, `You're username ${doctorData.username} already exists`);
     }
-    const hashedPassword = await bcrypt.hash(doctorData.password, 10);
-    const createUserData: IDoctor = await this.doctors.create({ ...doctorData, password: hashedPassword });
+    const createUserData: IDoctor = await this.doctors.create({ ...doctorData });
 
     return createUserData;
   }
@@ -26,11 +24,13 @@ class AuthService {
   public async login(doctorData: LoginDoctorDto): Promise<{ tokenData: TokenData; findDoctor: IDoctor }> {
     if (isEmpty(doctorData)) throw new HttpException(400, "You're not doctorData");
 
-    const findDoctor: IDoctor = await this.doctors.findOne({ where: { username: doctorData.username } });
-    if (!findDoctor) throw new HttpException(409, `You're username ${doctorData.username} not found`);
+    const findDoctor: IDoctor = await this.doctors.findOne({ where: { username: doctorData.username }, raw: true });
+    if (!findDoctor) throw new HttpException(409, `Tài khoản ${doctorData.username} không hợp lệ`);
+    console.log(findDoctor.password, typeof findDoctor.password);
+    console.log(doctorData.password, typeof doctorData.password);
 
-    const isPasswordMatching: boolean = await bcrypt.compare(doctorData.password, findDoctor.password);
-    if (!isPasswordMatching) throw new HttpException(409, "You're password not matching");
+    const isPasswordMatching: boolean = findDoctor.password === doctorData.password;
+    if (!isPasswordMatching) throw new HttpException(409, 'Mật khẩu không hợp lệ');
 
     const tokenData = this.createToken(findDoctor);
     // const cookie = this.createCookie(tokenData);
@@ -48,11 +48,8 @@ class AuthService {
   }
 
   public createToken(doctor: IDoctor): TokenData {
-    const dataStoredInToken: DataStoredInToken = { id: doctor.id };
     const secretKey: string = config.get('secretKey');
-    const expiresIn: number = 60 * 60;
-
-    return { expiresIn, token: jwt.sign(dataStoredInToken, secretKey, { expiresIn }) };
+    return { token: jwt.sign(doctor, secretKey) };
   }
 
   public createCookie(tokenData: TokenData): string {

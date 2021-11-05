@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
@@ -19,8 +18,7 @@ class DoctorService {
     const findDoctor: IDoctor = await this.doctors.findOne({ where: { username: doctorData.username } });
     if (findDoctor) throw new HttpException(409, `You're username ${doctorData.username} already exists`);
 
-    const hashedPassword = await bcrypt.hash(doctorData.password, 10);
-    const createdoctorData: IDoctor = await this.doctors.create({ ...doctorData, password: hashedPassword });
+    const createdoctorData: IDoctor = await this.doctors.create({ ...doctorData });
     return createdoctorData;
   }
 }

@@ -16,7 +16,7 @@ const authMiddleware = async (req: RequestWithDoctor, res: Response, next: NextF
       const findDoctor = await DB.Doctors.findByPk(doctorId);
 
       if (findDoctor) {
-        req.doctor = findDoctor;
+        req.body = findDoctor;
         next();
       } else {
         next(new HttpException(401, 'Wrong authentication token'));
