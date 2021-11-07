@@ -66,7 +66,7 @@ paths:
                 type: string
   /doctors/logout:
     post:
-      summary: 'Logout'
+      summary: 'Logout - DONE'
       tags:
         - doctors
       parameters:

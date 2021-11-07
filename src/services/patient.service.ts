@@ -1,8 +1,10 @@
-import DB from "@databases";
-import { HttpException } from "@exceptions/HttpException";
-import { isEmpty } from "@utils/util";
-import { IPatient } from "@/interfaces/patient.interface";
-import { CreatePatientDto } from "@/dtos/patient.dto";
+import DB from '@databases';
+import { HttpException } from '@exceptions/HttpException';
+import { isEmpty } from '@utils/util';
+import { IPatient } from '@/interfaces/patient.interface';
+import { CreatePatientDto } from '@/dtos/patient.dto';
+import Sequelize from 'sequelize';
+import moment from 'moment';
 
 class PatientService {
   private patients = DB.Patients;
@@ -42,6 +44,21 @@ class PatientService {
   // TODO: Search By id
   public async findById(patientId: number): Promise<IPatient> {
     return await this.patients.findByPk(patientId);
+  }
+
+  public async findAllByDate(date: Date, page: number) {
+    const where = {
+      createdAt: {
+        [Sequelize.Op.between]: [moment(date).startOf('date').toDate(), moment(date).endOf('date').toDate()],
+      },
+    };
+    const limit = 10;
+    const offset = page * limit;
+    return this.patients.findAll({
+      where,
+      limit,
+      offset,
+    });
   }
 }
 

@@ -1,13 +1,11 @@
 import { IXrayInput } from '@/interfaces/xrayInput.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { PatientModel } from './patient.model';
-import { XrayOutputModel } from './xrayOutput.model';
 
 export class XrayInputModel extends Model<IXrayInput> implements IXrayInput {
   patientId: number;
   xrayOutputId?: number;
   filepath: string;
-  note: string;
   status: string;
 
   public readonly createdAt!: Date;
@@ -23,10 +21,6 @@ export default function (sequelize: Sequelize): typeof XrayInputModel {
         type: DataTypes.INTEGER,
       },
       filepath: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      note: {
         type: DataTypes.STRING,
         allowNull: false,
       },

@@ -38,6 +38,11 @@ export default function (sequelize: Sequelize): typeof PatientModel {
         allowNull: true,
         defaultValue: '',
       },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
     },
     {
       tableName: 'patients',

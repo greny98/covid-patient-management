@@ -7,7 +7,6 @@ export interface IXrayInput {
   xrayOutput?: IXrayOutput;
   filepath: string;
   status: string;
-  note: string;
 }
 
 export interface IGetAllXrayInput {

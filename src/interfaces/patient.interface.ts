@@ -4,6 +4,7 @@ export interface IPatient {
   phone: string;
   note: string;
   status?: string;
+  createdAt?: Date;
 }
 
 export interface IGetAllPatients {

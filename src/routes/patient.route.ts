@@ -16,6 +16,7 @@ class PatientRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.patientController.getAllPatients);
     this.router.get(`${this.path}/:id(\\d+)`, this.patientController.getById);
+    this.router.get(`${this.path}/bydate`, this.patientController.getPatientsByDate);
     this.router.post(`${this.path}`, validationMiddleware(CreatePatientDto, 'body'), this.patientController.createPatient);
     this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(CreatePatientDto, 'body'), this.patientController.updatePatient);
   }

@@ -4,6 +4,9 @@ import PatientService from '@/services/patient.service';
 import { NextFunction, Request, Response, RequestHandler } from 'express';
 import XrayInputService from '@services/xrayInput.service';
 import XrayOutputService from '@services/xrayOutput.service';
+import moment from 'moment';
+
+type FilterByDate = { date: Date; page: number };
 
 class PatientController {
   public patientService = new PatientService();
@@ -60,6 +63,20 @@ class PatientController {
           // xrayOutputs,
         },
       });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getPatientsByDate: RequestHandler<any, any, FilterByDate, any> = async (req, res, next) => {
+    try {
+      const { date, page = 0 } = req.query;
+      console.log(
+        '🚀 ~ file: patient.controller.ts ~ line 75 ~ PatientController ~ getPatientsByDate:RequestHandler<any,any,FilterByDate,any>= ~ date',
+        date,
+      );
+      const allPatients = await this.patientService.findAllByDate(moment(date).toDate(), page);
+      res.status(200).json({ data: allPatients, message: 'findByDate' });
     } catch (error) {
       next(error);
     }

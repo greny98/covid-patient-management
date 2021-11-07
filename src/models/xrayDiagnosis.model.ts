@@ -4,9 +4,10 @@ import { PatientModel } from './patient.model';
 
 export class XrayDiagnosisModel extends Model<IXrayDiagnosis> implements IXrayDiagnosis {
   patientId: number;
-  filepath: string;
-  classify: number;
-  confident: number;
+  negativePneumonia: number;
+  typicalAppearance: number;
+  indeterminateAppearance: number;
+  atypicalAppearance: number;
   note: string;
   status: string;
 
@@ -22,15 +23,19 @@ export default function (sequelize: Sequelize): typeof XrayDiagnosisModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      filepath: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      classify: {
+      negativePneumonia: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      confident: {
+      typicalAppearance: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      indeterminateAppearance: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      atypicalAppearance: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

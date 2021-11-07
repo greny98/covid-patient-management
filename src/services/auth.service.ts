@@ -26,8 +26,6 @@ class AuthService {
 
     const findDoctor: IDoctor = await this.doctors.findOne({ where: { username: doctorData.username }, raw: true });
     if (!findDoctor) throw new HttpException(409, `Tài khoản ${doctorData.username} không hợp lệ`);
-    console.log(findDoctor.password, typeof findDoctor.password);
-    console.log(doctorData.password, typeof doctorData.password);
 
     const isPasswordMatching: boolean = findDoctor.password === doctorData.password;
     if (!isPasswordMatching) throw new HttpException(409, 'Mật khẩu không hợp lệ');

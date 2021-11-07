@@ -1,9 +1,10 @@
 export interface IXrayDiagnosis {
   id?: number;
   patientId?: number;
-  filepath: string;
-  classify: number;
-  confident: number;
+  negativePneumonia: number;
+  typicalAppearance: number;
+  indeterminateAppearance: number;
+  atypicalAppearance: number;
   note: string;
   status: string;
 }

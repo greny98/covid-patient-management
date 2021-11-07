@@ -3,12 +3,14 @@ import { IsNumber, IsString } from 'class-validator';
 export class CreateXrayDiagnosisDto {
   @IsNumber()
   public patientId: number;
-  @IsString()
-  public filepath: string;
   @IsNumber()
-  public classify: number;
+  public negativePneumonia: number;
   @IsNumber()
-  public confident: number;
+  public typicalAppearance: number;
+  @IsNumber()
+  public indeterminateAppearance: number;
+  @IsNumber()
+  public atypicalAppearance: number;
   @IsString()
   public note: string;
   @IsString()
