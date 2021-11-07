@@ -10,18 +10,18 @@ class CareController {
   public getByDate: RequestHandler<any, any, IFilterPatients, any> = async (req, res, next) => {
     try {
       const { date = new Date(), doctorId = 0 } = req.query as IFilterPatients;
-      const findAllPatientsData: ICare[] = await this.careService.filterPatients(doctorId, date);
+      const findAllPatientsData: IPatient[] = await this.careService.filterPatients(doctorId, date);
       res.status(200).json({ data: findAllPatientsData, message: 'findAll' });
     } catch (error) {
       next(error);
     }
   };
 
-  public getAllCares: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  public getAllCaresCount: RequestHandler<any, any, IGetAllCares, any> = async (req, res, next) => {
     try {
-      const { page = 0 } = req.query as IGetAllCares;
-      const findAllCaresData: ICare[] = await this.careService.findAllCares(page);
-      res.status(200).json({ data: findAllCaresData, message: 'findAll' });
+      const { doctorId, statusPatient = '' } = req.query as IGetAllCares;
+      const careNumber: number = await this.careService.findAllCares(doctorId, statusPatient);
+      res.status(200).json({ data: { careNumber }, message: 'findAll' });
     } catch (error) {
       next(error);
     }

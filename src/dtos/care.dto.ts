@@ -5,6 +5,4 @@ export class CreateCareDto {
   public patientId: number;
   @IsNumber()
   public doctorId: number;
-  @IsString()
-  public responsibility: string;
 }

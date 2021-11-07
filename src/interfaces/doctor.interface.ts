@@ -6,3 +6,7 @@ export interface IDoctor {
   phone: string;
   position: string;
 }
+
+export interface IAuthReq {
+  doctor: IDoctor;
+}

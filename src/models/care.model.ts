@@ -6,7 +6,7 @@ import { IDoctor } from '@interfaces/doctor.interface';
 import { IPatient } from '@interfaces/patient.interface';
 
 export class CareModel extends Model<ICare> implements ICare {
-  responsibility: string;
+  // responsibility: string;
   patientId: number;
   doctorId: number;
   doctor?: IDoctor;
@@ -24,10 +24,10 @@ export default function (sequelize: Sequelize): typeof CareModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      responsibility: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // responsibility: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
     },
     {
       tableName: 'cares',

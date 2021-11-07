@@ -1,15 +1,19 @@
 import { CreatePatientDto } from '@/dtos/patient.dto';
-import { IGetAllPatients, IPatient } from '@/interfaces/patient.interface';
+import { ICreatePatientBody, IGetAllPatients, IPatient } from '@/interfaces/patient.interface';
 import PatientService from '@/services/patient.service';
 import { NextFunction, Request, Response, RequestHandler } from 'express';
 import XrayInputService from '@services/xrayInput.service';
 import XrayOutputService from '@services/xrayOutput.service';
+import CareService from '@/services/care.service';
 import moment from 'moment';
+import { CreateCareDto } from '@/dtos/care.dto';
+import { ICare } from '@/interfaces/care.interface';
 
 type FilterByDate = { date: Date; page: number };
 
 class PatientController {
   public patientService = new PatientService();
+  public careService = new CareService();
   public xrayInputService = new XrayInputService();
   public xrayOutputService = new XrayOutputService();
 
@@ -25,9 +29,16 @@ class PatientController {
 
   public createPatient: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const patientData: CreatePatientDto = req.body;
+      const { patientData, doctorId } = req.body as ICreatePatientBody;
+      // CREATE PATIENT
       const createPatientData: IPatient = await this.patientService.createPatient(patientData);
-      res.status(201).json({ data: createPatientData, message: 'patient created' });
+      // CREATE CARES
+      const careData: CreateCareDto = {
+        patientId: createPatientData.id,
+        doctorId,
+      };
+      const createCareData: ICare = await this.careService.createCares(careData);
+      res.status(201).json({ data: { createPatientData, createCareData }, message: 'patient created' });
     } catch (error) {
       next(error);
     }
@@ -71,10 +82,6 @@ class PatientController {
   public getPatientsByDate: RequestHandler<any, any, FilterByDate, any> = async (req, res, next) => {
     try {
       const { date, page = 0 } = req.query;
-      console.log(
-        '🚀 ~ file: patient.controller.ts ~ line 75 ~ PatientController ~ getPatientsByDate:RequestHandler<any,any,FilterByDate,any>= ~ date',
-        date,
-      );
       const allPatients = await this.patientService.findAllByDate(moment(date).toDate(), page);
       res.status(200).json({ data: allPatients, message: 'findByDate' });
     } catch (error) {

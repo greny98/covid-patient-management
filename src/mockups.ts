@@ -29,10 +29,10 @@ export const doctors: CreateDoctorDto[] = [
 ];
 
 export const cares: CreateCareDto[] = [
-  { patientId: 1, doctorId: 1, responsibility: 'Điều trị' },
-  { patientId: 2, doctorId: 1, responsibility: 'Điều dưỡng' },
-  { patientId: 3, doctorId: 1, responsibility: 'Điều tiết' },
-  { patientId: 1, doctorId: 2, responsibility: 'Điều trị' },
-  { patientId: 2, doctorId: 2, responsibility: 'Điều dưỡng' },
-  { patientId: 3, doctorId: 2, responsibility: 'Điều tiết' },
+  { patientId: 1, doctorId: 1 },
+  { patientId: 2, doctorId: 1 },
+  { patientId: 3, doctorId: 1 },
+  { patientId: 1, doctorId: 2 },
+  { patientId: 2, doctorId: 2 },
+  { patientId: 3, doctorId: 2 },
 ];

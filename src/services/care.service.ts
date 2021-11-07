@@ -12,12 +12,15 @@ import { IPatient } from '@interfaces/patient.interface';
 class CareService {
   public cares = DB.Cares;
 
-  public async findAllCares(page: number): Promise<ICare[]> {
-    const limit = 10;
-    const offset = page * limit;
-    const allPatient: ICare[] = await this.cares.findAll({
-      limit,
-      offset,
+  public async findAllCares(doctorId: number, statusPatient: string): Promise<number> {
+    const wherePatient: any = {};
+    if (statusPatient) {
+      wherePatient.status = statusPatient;
+    }
+    const allCares: { rows: ICare[]; count: number } = await this.cares.findAndCountAll({
+      where: {
+        doctorId,
+      },
       include: [
         {
           model: DoctorModel,
@@ -26,17 +29,18 @@ class CareService {
         {
           model: PatientModel,
           as: 'patient',
+          where: wherePatient,
         },
       ],
     });
-    return allPatient;
+    return allCares.count;
   }
 
   public async createCares(careData: CreateCareDto): Promise<ICare> {
     if (isEmpty(careData)) throw new HttpException(400, "You're not careData");
 
-    const findCares: ICare = await this.cares.findOne({ where: { responsibility: careData.responsibility } });
-    if (findCares) throw new HttpException(409, `You're responsibility ${careData.responsibility} already exists`);
+    const findCares: ICare = await this.cares.findOne({ where: { doctorId: careData.doctorId, patientId: careData.patientId } });
+    if (findCares) throw new HttpException(409, `You're already exists`);
 
     return await this.cares.create({ ...careData });
   }

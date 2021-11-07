@@ -5,12 +5,14 @@ export interface ICare {
   id?: number;
   patientId?: number;
   doctorId?: number;
-  responsibility: string;
+  // responsibility: string;
   createdAt?: Date;
   patient?: IPatient;
   doctor?: IDoctor;
 }
 
 export interface IGetAllCares {
+  doctorId: number;
   page?: number;
+  statusPatient: string;
 }

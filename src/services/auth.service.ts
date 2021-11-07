@@ -21,7 +21,7 @@ class AuthService {
     return createUserData;
   }
 
-  public async login(doctorData: LoginDoctorDto): Promise<{ tokenData: TokenData; findDoctor: IDoctor }> {
+  public async login(doctorData: LoginDoctorDto): Promise<{ tokenData: TokenData; findDoctor: IDoctor; cookie: string }> {
     if (isEmpty(doctorData)) throw new HttpException(400, "You're not doctorData");
 
     const findDoctor: IDoctor = await this.doctors.findOne({ where: { username: doctorData.username }, raw: true });
@@ -31,9 +31,9 @@ class AuthService {
     if (!isPasswordMatching) throw new HttpException(409, 'Mật khẩu không hợp lệ');
 
     const tokenData = this.createToken(findDoctor);
-    // const cookie = this.createCookie(tokenData);
+    const cookie = this.createCookie(tokenData);
 
-    return { tokenData, findDoctor };
+    return { tokenData, findDoctor, cookie };
   }
 
   public async logout(doctorData: IDoctor): Promise<IDoctor> {

@@ -14,7 +14,7 @@ class CareRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.careController.getAllCares);
+    this.router.get(`${this.path}`, this.careController.getAllCaresCount);
     this.router.get(`${this.path}/filter`, this.careController.getByDate);
     this.router.post(`${this.path}`, validationMiddleware(CreateCareDto, 'body'), this.careController.createCare);
     this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(CreateCareDto, 'body'), this.careController.updateCare);
