@@ -42,6 +42,7 @@ class UploadRoute implements Routes {
 
   private initializeRoutes() {
     this.router.post(this.path, upload.single('image'), this.uploadController.uploadXrayInputs);
+    this.router.get(this.path, this.uploadController.getXrayInputsById);
   }
 }
 

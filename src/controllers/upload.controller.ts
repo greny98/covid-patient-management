@@ -17,6 +17,16 @@ class UploadController {
     });
     res.json(created);
   };
+
+  public getXrayInputsById: RequestHandler = async (req, res, next) => {
+    try {
+      const { patientId }: any = req.query;
+      const allXrayInput = await this.xrayInputService.findByPatientId(patientId);
+      res.status(200).json({ data: allXrayInput, message: 'findAll' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default UploadController;

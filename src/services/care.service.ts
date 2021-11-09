@@ -35,6 +35,27 @@ class CareService {
     });
     return allCares.count;
   }
+  public async findCaresByLatestSixMonth(doctorId: number): Promise<any> {
+    const six_month_ago = moment().subtract(6, 'month').toDate();
+    const now = moment().endOf('month').toDate();
+    const allCares = await this.cares.findAll({
+      where: {
+        doctorId,
+        createdAt: {
+          [Op.between]: [six_month_ago, now],
+        },
+      },
+      order: [['createdAt', 'desc']],
+      raw: true,
+    });
+    return allCares.reduce((obj, current) => {
+      const month = moment(current.createdAt).format('MMM');
+      if (obj[month]) {
+        return { ...obj, [month]: [...obj[month], current] };
+      }
+      return { ...obj, [month]: [current] };
+    }, {});
+  }
 
   public async createCares(careData: CreateCareDto): Promise<ICare> {
     if (isEmpty(careData)) throw new HttpException(400, "You're not careData");

@@ -16,3 +16,7 @@ export interface IGetAllCares {
   page?: number;
   statusPatient: string;
 }
+export interface IGetCaresByDate {
+  doctorId: number;
+  page?: number;
+}

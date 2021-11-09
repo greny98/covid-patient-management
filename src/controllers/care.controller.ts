@@ -1,5 +1,5 @@
 import { CreateCareDto } from '@/dtos/care.dto';
-import { ICare, IGetAllCares } from '@/interfaces/care.interface';
+import { ICare, IGetAllCares, IGetCaresByDate } from '@/interfaces/care.interface';
 import CareService from '@/services/care.service';
 import { NextFunction, Request, Response, RequestHandler } from 'express';
 import { IFilterPatients, IPatient } from '@interfaces/patient.interface';
@@ -22,6 +22,16 @@ class CareController {
       const { doctorId, statusPatient = '' } = req.query as IGetAllCares;
       const careNumber: number = await this.careService.findAllCares(doctorId, statusPatient);
       res.status(200).json({ data: { careNumber }, message: 'findAll' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getCaresByLastestSixMonth: RequestHandler<any, any, IGetCaresByDate, any> = async (req, res, next) => {
+    try {
+      const { doctorId } = req.query as IGetCaresByDate;
+      const careData: any = await this.careService.findCaresByLatestSixMonth(doctorId);
+      res.status(200).json({ data: careData, message: 'findAll' });
     } catch (error) {
       next(error);
     }

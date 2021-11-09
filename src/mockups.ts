@@ -9,6 +9,12 @@ export const patients: CreatePatientDto[] = [
   { phone: '+84337676999', fullname: 'Nguyen Anh Tuan', note: '' },
   { phone: '+84337676888', fullname: 'Le Quang Anh', note: 'Fuck boy!!!' },
   { phone: '+84337676777', fullname: 'Nguyen Minh Huy', note: 'Fuck king!!!' },
+  { phone: '+84337676998', fullname: 'Nguyen Anh Tuan 1', note: '' },
+  { phone: '+84337676887', fullname: 'Le Quang Anh 1', note: 'Fuck boy!!!' },
+  { phone: '+84337676776', fullname: 'Nguyen Minh Huy 1', note: 'Fuck king!!!' },
+  { phone: '+84337676995', fullname: 'Nguyen Anh Tuan 2', note: '' },
+  { phone: '+84337676884', fullname: 'Le Quang Anh 2', note: 'Fuck boy!!!' },
+  { phone: '+84337676773', fullname: 'Nguyen Minh Huy 2', note: 'Fuck king!!!' },
 ];
 
 export const xrayInputs: CreateXrayInputDto[] = [
@@ -32,7 +38,10 @@ export const cares: CreateCareDto[] = [
   { patientId: 1, doctorId: 1 },
   { patientId: 2, doctorId: 1 },
   { patientId: 3, doctorId: 1 },
-  { patientId: 1, doctorId: 2 },
-  { patientId: 2, doctorId: 2 },
-  { patientId: 3, doctorId: 2 },
+  { patientId: 4, doctorId: 1 },
+  { patientId: 5, doctorId: 2 },
+  { patientId: 6, doctorId: 2 },
+  { patientId: 7, doctorId: 2 },
+  { patientId: 8, doctorId: 2 },
+  { patientId: 9, doctorId: 2 },
 ];

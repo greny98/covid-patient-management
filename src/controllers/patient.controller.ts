@@ -30,6 +30,7 @@ class PatientController {
   public createPatient: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { patientData, doctorId } = req.body as ICreatePatientBody;
+      //TODO: get doctorId by middleware
       // CREATE PATIENT
       const createPatientData: IPatient = await this.patientService.createPatient(patientData);
       // CREATE CARES
@@ -79,15 +80,15 @@ class PatientController {
     }
   };
 
-  public getPatientsByDate: RequestHandler<any, any, FilterByDate, any> = async (req, res, next) => {
-    try {
-      const { date, page = 0 } = req.query;
-      const allPatients = await this.patientService.findAllByDate(moment(date).toDate(), page);
-      res.status(200).json({ data: allPatients, message: 'findByDate' });
-    } catch (error) {
-      next(error);
-    }
-  };
+  // public getPatientsByDate: RequestHandler<any, any, FilterByDate, any> = async (req, res, next) => {
+  //   try {
+  //     const { date, page = 0 } = req.query;
+  //     const allPatients = await this.patientService.findAllByDate(moment(date).toDate(), page);
+  //     res.status(200).json({ data: allPatients, message: 'findByDate' });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 }
 
 export default PatientController;
