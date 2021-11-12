@@ -14,6 +14,9 @@ import swaggerUi from 'swagger-ui-express';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
+import { ensureDirSync } from 'fs-extra';
+import { homedir } from 'os';
+import path from 'path';
 
 class App {
   public app: express.Application;
@@ -24,6 +27,7 @@ class App {
     this.app = express();
     this.port = process.env.PORT || 3000;
     this.env = process.env.NODE_ENV || 'development';
+    ensureDirSync(path.join(homedir(), 'uploads'));
 
     this.connectToDatabase();
     this.initializeMiddlewares();
@@ -58,7 +62,7 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
-    this.app.use('/uploads', express.static('uploads'));
+    this.app.use('/uploads', express.static('~/uploads'));
   }
 
   private initializeRoutes(routes: Routes[]) {

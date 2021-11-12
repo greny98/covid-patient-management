@@ -8,10 +8,9 @@ class UploadController {
 
   public uploadXrayInputs: RequestHandler = async (req, res) => {
     const { patientId, note = '' }: UploadXrayInputDto = req.body;
-    const filepath = `uploads/${req.file.filename}`;
     const created = await this.xrayInputService.createXrayInput({
       patientId,
-      filepath,
+      filepath: req.file.filename,
       note,
       status: EStatus.IN_PROGRESS,
     });

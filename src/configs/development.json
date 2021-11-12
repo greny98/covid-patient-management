@@ -3,7 +3,7 @@
   "dbConfig": {
     "host": "localhost",
     "user": "root",
-    "password": "quanganh851",
+    "password": "tuan1234",
     "database": "covid-patient-management",
     "pool": {
       "min": 0,

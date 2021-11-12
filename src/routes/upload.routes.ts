@@ -5,10 +5,12 @@ import { Routes } from '@interfaces/routes.interface';
 import PatientService from '@services/patient.service';
 import { UploadXrayInputDto } from '@dtos/upload.dto';
 import UploadController from '@controllers/upload.controller';
+import path from 'path';
+import { homedir } from 'os';
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, 'uploads/');
+    callback(null, path.join(homedir(), 'uploads'));
   },
   async filename(req: express.Request, file: Express.Multer.File, callback) {
     const patientService = new PatientService();
