@@ -1,13 +1,13 @@
-import DB from '@databases';
-import { HttpException } from '@exceptions/HttpException';
-import { isEmpty } from '@utils/util';
-import { ICare } from '@/interfaces/care.interface';
-import { CreateCareDto } from '@/dtos/care.dto';
-import { DoctorModel } from '@/models/doctor.model';
-import { PatientModel } from '@/models/patient.model';
-import moment from 'moment';
-import { Op } from 'sequelize';
-import { IPatient } from '@interfaces/patient.interface';
+import DB from "@databases";
+import { HttpException } from "@exceptions/HttpException";
+import { isEmpty } from "@utils/util";
+import { ICare } from "@/interfaces/care.interface";
+import { CreateCareDto } from "@/dtos/care.dto";
+import { DoctorModel } from "@/models/doctor.model";
+import { PatientModel } from "@/models/patient.model";
+import moment from "moment";
+import { Op } from "sequelize";
+import { IPatient } from "@interfaces/patient.interface";
 
 class CareService {
   public cares = DB.Cares;
@@ -97,6 +97,17 @@ class CareService {
       ],
     });
     return cares.map(c => c.patient);
+  }
+  public async findByPatientId(patientId: number): Promise<ICare> {
+    return await this.cares.findOne({
+      where: {
+        patientId,
+      },
+      include: [
+        { model: DoctorModel, as: 'doctor' },
+        { model: PatientModel, as: 'patient' },
+      ],
+    });
   }
 }
 

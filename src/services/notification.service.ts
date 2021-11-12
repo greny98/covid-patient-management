@@ -4,9 +4,12 @@ import { isEmpty } from '@utils/util';
 import { INotification } from '@/interfaces/notification.interface';
 import { CreateNotificationDto } from '@/dtos/notification.dto';
 import { DoctorModel } from '@/models/doctor.model';
+import DeviceService from '@services/device.service';
+import axios from 'axios';
 
 class NotificationService {
   public notification = DB.Notifications;
+  public deviceService = new DeviceService();
 
   public async findAllNotifications(page: number): Promise<INotification[]> {
     const limit = 10;
@@ -25,7 +28,16 @@ class NotificationService {
   public async createNotification(notificationData: CreateNotificationDto): Promise<INotification> {
     if (isEmpty(notificationData)) throw new HttpException(400, "You're not notificationData");
     // TODO: should check exist or not
-    return await this.notification.create({ ...notificationData });
+    const noti = await this.notification.create({ ...notificationData });
+    const device = await this.deviceService.findByDoctorId(notificationData.doctorId);
+    const data = {
+      to: device.token,
+      sound: 'default',
+      title: 'Thông báo',
+      body: noti.content,
+    };
+    await axios.post('https://exp.host/--/api/v2/push/send', data);
+    return noti;
   }
 
   public async updateNotification(notificationId: number, notificationData: CreateNotificationDto): Promise<INotification> {

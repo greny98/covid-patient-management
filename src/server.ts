@@ -13,6 +13,7 @@ import DeviceRoute from './routes/device.route';
 import XrayDiagnosisRoute from './routes/xrayDiagnosis.route';
 import MockupRoute from '@routes/mockup.route';
 import UploadRoute from '@routes/upload.routes';
+import XrayInputRoute from '@routes/xrayInput.route';
 
 import validateEnv from '@utils/validateEnv';
 validateEnv();
@@ -29,6 +30,7 @@ const app = new App([
   new XrayDiagnosisRoute(),
   new MockupRoute(),
   new UploadRoute(),
+  new XrayInputRoute(),
 ]);
 
 app.listen();

@@ -24,19 +24,19 @@ export default function (sequelize: Sequelize): typeof XrayDiagnosisModel {
         type: DataTypes.INTEGER,
       },
       negativePneumonia: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       typicalAppearance: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       indeterminateAppearance: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       atypicalAppearance: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       note: {

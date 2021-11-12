@@ -3,6 +3,7 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 import { DoctorModel } from './doctor.model';
 
 export class DeviceModel extends Model<IDevice> implements IDevice {
+  id?: number;
   doctorId: number;
   token: string;
   expiredAt: Date;

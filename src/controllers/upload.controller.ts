@@ -2,6 +2,7 @@ import XrayInputService from '@services/xrayInput.service';
 import { RequestHandler } from 'express';
 import { UploadXrayInputDto } from '@dtos/upload.dto';
 import { EStatus } from '@interfaces/xrayInput.interface';
+import axios from 'axios';
 
 class UploadController {
   private xrayInputService = new XrayInputService();
@@ -14,6 +15,7 @@ class UploadController {
       note,
       status: EStatus.IN_PROGRESS,
     });
+    await axios.get('http://localhost:5000/api/diagnosis');
     res.json(created);
   };
 

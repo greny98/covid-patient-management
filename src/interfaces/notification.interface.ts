@@ -8,3 +8,8 @@ export interface INotification {
 export interface IGetAllNoti {
   page?: number;
 }
+
+export enum ENotiStatus {
+  UNSEEN = 'UNSEEN',
+  SEEN = 'SEEN',
+}

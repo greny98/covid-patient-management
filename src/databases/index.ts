@@ -44,8 +44,8 @@ const DB = {
   Notifications: NotificationModel(sequelize),
   Devices: DeviceModel(sequelize),
   XrayInput: XrayInputModel(sequelize),
-  XrayDiagnosis: XrayDiagnosisModel(sequelize),
   XrayOutput: XrayOutputModel(sequelize),
+  XrayDiagnosis: XrayDiagnosisModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };

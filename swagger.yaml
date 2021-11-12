@@ -17,6 +17,7 @@ tags:
   - name: doctors
   - name: patients
   - name: notification
+  - name: xray_input
 
 paths:
   # =========================================[Mockup]=======================================================
@@ -211,8 +212,22 @@ paths:
         200:
           description: 'Thành công'
   # =========================================[XRayInput]=======================================================
-  # TODO: Xóa ảnh
-
+  # TODO: Update status
+  /xray_input/:id:
+    put:
+      summary: 'Cập nhật status của xray input có id thành COMPLETED'
+      tags:
+        - xray_input
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: 'Update thành công'
+          schema:
+            $ref: '#/definitions/xray_input'
   # =========================================[Notification]=======================================================
   # TODO: Liệt kê noti
   # TODO: Lấy số lượng noti chưa xem

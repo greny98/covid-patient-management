@@ -18,14 +18,14 @@ class MockupController {
     try {
       const patientsCreated = await Promise.all(patients.map(p => this.patientService.createPatient(p)));
       const doctorsCreated = await Promise.all(doctors.map(doc => this.doctorService.createDoctor(doc)));
-      const xrayInputsCreated = await Promise.all(xrayInputs.map(xray => this.xrayInputService.createXrayInput(xray)));
-      const xrayOutputsCreated = await Promise.all(xrayOutputs.map(xray => this.xrayOutputService.createXrayOutput(xray)));
+      // const xrayInputsCreated = await Promise.all(xrayInputs.map(xray => this.xrayInputService.createXrayInput(xray)));
+      // const xrayOutputsCreated = await Promise.all(xrayOutputs.map(xray => this.xrayOutputService.createXrayOutput(xray)));
       const careCreated = await Promise.all(cares.map(care => this.careService.createCares(care)));
       res.json({
         patientsCreated,
         doctorsCreated,
-        xrayInputsCreated,
-        xrayOutputsCreated,
+        // xrayInputsCreated,
+        // xrayOutputsCreated,
         careCreated,
       });
     } catch (e) {

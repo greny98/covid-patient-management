@@ -30,6 +30,10 @@ class DeviceService {
 
   public async createDevices(deviceData: CreateDeviceDto): Promise<IDevice> {
     if (isEmpty(deviceData)) throw new HttpException(400, "You're not deviceData");
+    const exist = await this.devices.findOne({ where: { doctorId: deviceData.doctorId }, raw: true });
+    if (exist) {
+      return await this.updateDevice(exist.id, deviceData);
+    }
     const tokenDeviceData = this.createTokenDevice(deviceData);
     const newDevice = await this.devices.create({
       doctorId: deviceData.doctorId,
@@ -60,6 +64,10 @@ class DeviceService {
     const expiresIn: number = 60 * 60;
 
     return { expiresIn, token: jwt.sign(dataStoredInToken, secretKey, { expiresIn }) };
+  }
+
+  public async findByDoctorId(doctorId): Promise<IDevice> {
+    return await this.devices.findOne({ where: { doctorId } });
   }
 }
 
