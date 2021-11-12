@@ -43,12 +43,11 @@ const DB = {
   Cares: CareModel(sequelize),
   Notifications: NotificationModel(sequelize),
   Devices: DeviceModel(sequelize),
-  XrayDiagnosis: XrayDiagnosisModel(sequelize),
   XrayInput: XrayInputModel(sequelize),
+  XrayDiagnosis: XrayDiagnosisModel(sequelize),
   XrayOutput: XrayOutputModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };
 
-console.log('LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 export default DB;

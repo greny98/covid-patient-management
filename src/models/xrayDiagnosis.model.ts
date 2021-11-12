@@ -1,9 +1,9 @@
 import { IXrayDiagnosis } from '@/interfaces/xrayDiagnosis.interface';
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { PatientModel } from './patient.model';
+import { XrayInputModel } from '@models/xrayInput.model';
 
 export class XrayDiagnosisModel extends Model<IXrayDiagnosis> implements IXrayDiagnosis {
-  patientId: number;
+  xrayInputId: number;
   negativePneumonia: number;
   typicalAppearance: number;
   indeterminateAppearance: number;
@@ -53,7 +53,7 @@ export default function (sequelize: Sequelize): typeof XrayDiagnosisModel {
       sequelize,
     },
   );
-  XrayDiagnosisModel.belongsTo(PatientModel, { foreignKey: { name: 'patientId' }, as: 'patient' });
+  XrayDiagnosisModel.belongsTo(XrayInputModel, { foreignKey: { name: 'xrayInputId' }, as: 'xrayInput' });
 
   return XrayDiagnosisModel;
 }

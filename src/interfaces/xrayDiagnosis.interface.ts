@@ -1,6 +1,6 @@
 export interface IXrayDiagnosis {
   id?: number;
-  patientId?: number;
+  xrayInputId?: number;
   negativePneumonia: number;
   typicalAppearance: number;
   indeterminateAppearance: number;
