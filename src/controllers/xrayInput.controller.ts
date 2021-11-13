@@ -40,6 +40,7 @@ class XrayInputController {
         doctorId: doctor.id,
         status: ENotiStatus.UNSEEN,
         content: `Một ảnh x-quang của bệnh nhân ${patient.fullname} đã được chuẩn đoán.`,
+        patientId: updateXrayInputData.patientId,
       });
       res.json({ data: updateXrayInputData, message: 'updated' });
     } catch (error) {

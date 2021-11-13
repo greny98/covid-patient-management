@@ -35,6 +35,7 @@ class NotificationService {
       sound: 'default',
       title: 'Thông báo',
       body: noti.content,
+      data: { patientId: notificationData.patientId },
     };
     await axios.post('https://exp.host/--/api/v2/push/send', data);
     return noti;

@@ -12,3 +12,6 @@ export interface IXrayDiagnosis {
 export interface IGetAllXrayDiagnosis {
   page?: number;
 }
+export interface IGetXrayDiagnosisByXrayId {
+  xrayInputId: number;
+}

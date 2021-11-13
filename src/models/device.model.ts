@@ -6,7 +6,6 @@ export class DeviceModel extends Model<IDevice> implements IDevice {
   id?: number;
   doctorId: number;
   token: string;
-  expiredAt: Date;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -22,10 +21,6 @@ export default function (sequelize: Sequelize): typeof DeviceModel {
       },
       token: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      expiredAt: {
-        type: DataTypes.DATE,
         allowNull: false,
       },
     },

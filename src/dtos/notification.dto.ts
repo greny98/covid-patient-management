@@ -7,4 +7,6 @@ export class CreateNotificationDto {
   public content: string;
   @IsString()
   public status: string;
+  @IsNumber()
+  public patientId: number;
 }

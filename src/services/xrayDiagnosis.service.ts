@@ -1,9 +1,7 @@
 import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
-import moment from 'moment';
 import { IXrayDiagnosis } from '@/interfaces/xrayDiagnosis.interface';
-import { PatientModel } from '@/models/patient.model';
 import { CreateXrayDiagnosisDto } from '@/dtos/xrayDiagnosis.dto';
 
 class XrayDiagnosisService {
@@ -15,12 +13,15 @@ class XrayDiagnosisService {
     const allXrayDiagnosis: IXrayDiagnosis[] = await this.xrayDiagnosis.findAll({
       limit,
       offset,
-      include: [
-        {
-          model: PatientModel,
-          as: 'patient',
-        },
-      ],
+    });
+    return allXrayDiagnosis;
+  }
+
+  public async findXrayDiagnosisByXrayId(xrayInputId: number): Promise<IXrayDiagnosis[]> {
+    const allXrayDiagnosis: IXrayDiagnosis[] = await this.xrayDiagnosis.findAll({
+      where: {
+        xrayInputId,
+      },
     });
     return allXrayDiagnosis;
   }

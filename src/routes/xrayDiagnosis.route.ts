@@ -15,6 +15,7 @@ class XrayDiagnosisRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.xrayDiagnosisController.getAllXrayDiagnosis);
+    this.router.get(`${this.path}/getById`, this.xrayDiagnosisController.getDiagnosisByXrayId);
     this.router.post(`${this.path}`, validationMiddleware(CreateXrayDiagnosisDto, 'body'), this.xrayDiagnosisController.createXrayDiagnosis);
   }
 }

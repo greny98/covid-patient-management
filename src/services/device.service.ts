@@ -7,7 +7,6 @@ import { DoctorModel } from '@/models/doctor.model';
 import { IDevice } from '@/interfaces/device.interface';
 import { CreateDeviceDto } from '@/dtos/device.dto';
 import { DataStoredInToken, TokenData } from '@/interfaces/auth.interface';
-import moment from 'moment';
 
 class DeviceService {
   public devices = DB.Devices;
@@ -34,12 +33,7 @@ class DeviceService {
     if (exist) {
       return await this.updateDevice(exist.id, deviceData);
     }
-    const tokenDeviceData = this.createTokenDevice(deviceData);
-    const newDevice = await this.devices.create({
-      doctorId: deviceData.doctorId,
-      token: tokenDeviceData.token,
-      expiredAt: moment().add(tokenDeviceData.expiresIn, 'minutes').toDate(),
-    });
+    const newDevice = await this.devices.create(deviceData);
     return newDevice;
   }
 
