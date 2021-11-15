@@ -6,10 +6,20 @@ import { NextFunction, Request, Response, RequestHandler } from 'express';
 class NotificationController {
   public notiService = new NotificationService();
 
-  public getAllNotifications: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  public getAllNotificationsByDoctorId: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { page = 0 } = req.query as IGetAllNoti;
-      const findAllNotificationsData: INotification[] = await this.notiService.findAllNotifications(page);
+      const { doctorId = 1, page = 0 } = req.query as IGetAllNoti;
+      const findAllNotificationsData: INotification[] = await this.notiService.findAllNotifications(doctorId, page);
+      res.status(200).json({ data: findAllNotificationsData, message: 'findAll' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getCountUnseen: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { doctorId = 1 } = req.query as IGetAllNoti;
+      const findAllNotificationsData: INotification[] = await this.notiService.countAllUnseenNoti(doctorId);
       res.status(200).json({ data: findAllNotificationsData, message: 'findAll' });
     } catch (error) {
       next(error);

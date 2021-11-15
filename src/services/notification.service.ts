@@ -1,7 +1,7 @@
 import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
-import { INotification } from '@/interfaces/notification.interface';
+import { ENotiStatus, INotification } from '@/interfaces/notification.interface';
 import { CreateNotificationDto } from '@/dtos/notification.dto';
 import { DoctorModel } from '@/models/doctor.model';
 import DeviceService from '@services/device.service';
@@ -11,18 +11,31 @@ class NotificationService {
   public notification = DB.Notifications;
   public deviceService = new DeviceService();
 
-  public async findAllNotifications(page: number): Promise<INotification[]> {
+  public async findAllNotifications(doctorId: number, page: number): Promise<INotification[]> {
     const limit = 10;
     const offset = page * limit;
     const allNotifications: INotification[] = await this.notification.findAll({
       limit,
       offset,
+      where: {
+        doctorId,
+      },
       include: {
         model: DoctorModel,
         as: 'doctor',
       },
     });
     return allNotifications;
+  }
+
+  public async countAllUnseenNoti(doctorId: number): Promise<any> {
+    const { rows, count } = await this.notification.findAndCountAll({
+      where: {
+        doctorId,
+        status: ENotiStatus.UNSEEN,
+      },
+    });
+    return count;
   }
 
   public async createNotification(notificationData: CreateNotificationDto): Promise<INotification> {

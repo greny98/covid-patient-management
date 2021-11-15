@@ -19,7 +19,7 @@ class XrayDiagnosisController {
   public getDiagnosisByXrayId: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { xrayInputId } = req.query as any;
-      const findXrayDiagnosis: IXrayDiagnosis[] = await this.xrayDiagnosisService.findXrayDiagnosisByXrayId(xrayInputId);
+      const findXrayDiagnosis: IXrayDiagnosis = await this.xrayDiagnosisService.findXrayDiagnosisByXrayId(xrayInputId);
       res.status(200).json({ data: findXrayDiagnosis, message: 'findAll' });
     } catch (error) {
       next(error);

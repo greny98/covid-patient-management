@@ -17,12 +17,13 @@ class XrayDiagnosisService {
     return allXrayDiagnosis;
   }
 
-  public async findXrayDiagnosisByXrayId(xrayInputId: number): Promise<IXrayDiagnosis[]> {
-    const allXrayDiagnosis: IXrayDiagnosis[] = await this.xrayDiagnosis.findAll({
+  public async findXrayDiagnosisByXrayId(xrayInputId: number): Promise<IXrayDiagnosis> {
+    const allXrayDiagnosis: IXrayDiagnosis = await this.xrayDiagnosis.findOne({
       where: {
         xrayInputId,
       },
     });
+
     return allXrayDiagnosis;
   }
 

@@ -14,7 +14,8 @@ class NotificationRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.notificationController.getAllNotifications);
+    this.router.get(`${this.path}`, this.notificationController.getAllNotificationsByDoctorId);
+    this.router.get(`${this.path}/unseen`, this.notificationController.getCountUnseen);
     this.router.post(`${this.path}`, validationMiddleware(CreateNotificationDto, 'body'), this.notificationController.createNoti);
     this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(CreateNotificationDto, 'body'), this.notificationController.updateNoti);
   }
